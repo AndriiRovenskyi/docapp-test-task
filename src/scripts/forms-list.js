@@ -9,6 +9,7 @@ export const showFormList = (formList, patient) => {
         selectAllCheckbox = document.createElement('input'),
         selectAllSpan = document.createElement('span'),
         signBtn = document.createElement('button');
+    container.classList.add('form-list-container');
     signBtn.innerHTML = 'Sign';
     signBtn.disabled = true;
     signBtn.addEventListener('click', () => {

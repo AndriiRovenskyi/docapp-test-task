@@ -4,12 +4,20 @@ import { app } from '../app'
 
 export const showRoom = (appointment, code) => {
     app.innerHTML = '';
-    const div = document.createElement('div');
+    const div = document.createElement('table');
     div.innerHTML = `
-        <p>Room ${code}</p>
-        <p>${appointment.start_date}</p>
-        <p>HT: ${appointment.vital_signs.height_ft}'${appointment.vital_signs.height_in}',WT ${appointment.vital_signs.weight}lbs, BMI ${appointment.vital_signs.bmi}</p>
-        <p>${getDoctorFullName(appointment)}</p>
+    <tr>
+                    <th>Room code</th>
+                    <th>Start date</th>
+                    <th>Details</th>
+                    <th>Doctor</th>
+    </tr>
+    <tr>
+        <td>Room ${code}</td>
+        <td>${appointment.start_date}</td>
+        <td>HT: ${appointment.vital_signs.height_ft}'${appointment.vital_signs.height_in}',WT ${appointment.vital_signs.weight}lbs, BMI ${appointment.vital_signs.bmi}</td>
+        <td>${getDoctorFullName(appointment)}</td>
+    </tr>    
       `
     app.appendChild(div);
 
@@ -18,6 +26,7 @@ export const showRoom = (appointment, code) => {
         formList.showFormList(res, {first_name: appointment.first_name, last_name: appointment.last_name});
     });
 };
+
 
 function getDoctorFullName(appointment) {
     let name = appointment.doctor_title + ', ' + calculateAge(new Date(appointment.birthday)) + ', ' + appointment.gender[0];

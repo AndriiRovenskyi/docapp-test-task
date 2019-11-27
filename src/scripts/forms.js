@@ -4,6 +4,7 @@ import {app} from '../app'
 
 export const showForms = (forms, patient) => {
     let container = document.getElementById('form-container'),
+        tabsContainer = document.createElement('div'),
         formDetailsContainer = document.createElement('div')
     formDetailsContainer.id = 'form-details-container';
     if(!container){
@@ -18,11 +19,11 @@ export const showForms = (forms, patient) => {
                 <span>${el.short_title}</span>
             `;
         tab.addEventListener('click', (event) => {
-            event.target.className = 'active';
             formDetails.showDetailsForm(el.code, patient);
         });
-        container.appendChild(tab);
+        tabsContainer.appendChild(tab);
     });
+    container.appendChild(tabsContainer);
     container.appendChild(formDetailsContainer);
     app.appendChild(container);
     formDetails.showDetailsForm(forms[0].code, patient);

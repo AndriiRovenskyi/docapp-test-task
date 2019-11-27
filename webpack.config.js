@@ -20,5 +20,20 @@ module.exports = {
     before: function(app, server) {
       app.use("/api", express.static(path.join(__dirname, "data")));
     }
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+      }
+    ],
+  },
 };
