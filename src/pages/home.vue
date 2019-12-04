@@ -1,8 +1,6 @@
 <template>
-
     <table>
         <tr>
-
             <th>#Room</th>
             <th>Client</th>
             <th>Status</th>
@@ -28,10 +26,11 @@
     import  {bus} from '../'
 
     export default {
+        name: 'home',
         data() {
             return {
                 rooms: null,
-
+                interval: null,
             }
         },
         mounted() {
@@ -39,11 +38,9 @@
                 .get('api/rooms.json')
                 .then(response => {
                     this.rooms = response.data;
-                    setInterval(() => {
+                    this.interval = setInterval(() => {
                         this.rooms = this.rooms.map(this.addWaitingTime)
-                    })
-
-
+                    },1000)
                 });
         },
         methods: {
@@ -72,6 +69,9 @@
                     bus.$emit('room', appointment, code);
                 })
             }
+        },
+        beforeDestroy() {
+            clearInterval(this.interval);
         }
     }
 </script>

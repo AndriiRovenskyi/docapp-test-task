@@ -1,23 +1,29 @@
 <template>
     <div>
-    <table>
-        <tr>
-            <th>Room code</th>
-            <th>Start date</th>
-            <th>Details</th>
-            <th>Doctor</th>
-        </tr>
-       <tr v-if="appointment != null">
-           <td>Room {{code}}</td>
-           <td>{{appointment.start_date}}</td>
-           <td>HT: {{appointment.vital_signs.height_ft}}'{{appointment.vital_signs.height_in}}',WT {{appointment.vital_signs.weight}}lbs, BMI {{appointment.vital_signs.bmi}}</td>
-           <td>{{getDoctorFullName(appointment)}}</td>
-       </tr>
-    </table>
-        <FormsComponent @selectForms="selectForms"></FormsComponent>
-        <div v-if="selectedForms.length > 0">
-            <ConsentComponent :selectedForms="selectedForms"></ConsentComponent>
+        <div v-if="appointment">
+        <table>
+            <tr>
+                <th>Room code</th>
+                <th>Start date</th>
+                <th>Details</th>
+                <th>Doctor</th>
+            </tr>
+           <tr>
+               <td>Room {{code}}</td>
+               <td>{{appointment.start_date}}</td>
+               <td>HT: {{appointment.vital_signs.height_ft}}'{{appointment.vital_signs.height_in}}',WT {{appointment.vital_signs.weight}}lbs, BMI {{appointment.vital_signs.bmi}}</td>
+               <td>{{getDoctorFullName(appointment)}}</td>
+           </tr>
+        </table>
+            <FormsComponent @selectForms="selectForms"></FormsComponent>
+            <div v-if="selectedForms.length > 0">
+                <ConsentComponent v-bind:selectedForms="selectedForms"  v-bind:patient="{first_name: appointment.first_name, last_name: appointment.last_name}"></ConsentComponent>
+            </div>
         </div>
+
+        <router-link class="btn btn-back" to="/">&larr; Back to table</router-link>
+
+
     </div>
 </template>
 
@@ -53,13 +59,16 @@
                 return name;
             },
             calculateAge(birthday) { // birthday is a date
-                var ageDifMs = Date.now() - birthday.getTime();
-                var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                let ageDifMs = Date.now() - birthday.getTime();
+                let ageDate = new Date(ageDifMs); // miliseconds from epoch
                 return Math.abs(ageDate.getUTCFullYear() - 1970);
             },
             selectForms(selectedFroms) {
-                this.selectedForms = selectedFroms;
+                this.selectedForms = [...selectedFroms];
             }
+        },
+        beforeDestroy() {
+            bus.$off('room');
         }
     }
 </script>

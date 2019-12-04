@@ -6,7 +6,7 @@ body {
 input[type=checkbox] {
     cursor: pointer;
 }
-#btn-back {
+.btn-back {
     position: fixed;
     left: 10px;
     bottom: 20px;
@@ -39,7 +39,7 @@ table {
         color: white;
       }
   }
-  button {
+  .btn {
     background-color: #212121; /* Green */
     border: none;
     color: white;
@@ -76,7 +76,7 @@ table {
   }
 
   
-  #form-container {
+  .form-container {
     overflow: hidden;
     width: 80%;
     margin: auto;
@@ -97,12 +97,17 @@ table {
             }
         }
     }
-    #form-details-container {
+    .form-details-container {
         background: white;
         ul {
             list-style: none;
             li {
-                margin-bottom: 10px;
+              margin-bottom: 10px;
+              display: flex;
+              align-items: flex-start;
+              .form-details-prefix{
+                margin-right: 10px;
+              }
                 input {
                     margin-right: 10px;
                 }

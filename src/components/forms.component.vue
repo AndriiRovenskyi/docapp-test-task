@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="form-list-container">
         <div>
             <input type="checkbox" v-model="selectAll.value" v-on:change="selectAll($event)">
             <span>{{selectAllBtn.title}}</span>
@@ -8,10 +8,8 @@
             <input type="checkbox" v-model="form.selected" v-on:change="selectForm($event, form)">
             <span>{{form.title}}</span>
         </div>
-        <button @click="$emit('selectForms', selectedForms);" :disabled="signBtn">Sign</button>
+        <button class="btn" @click="$emit('selectForms', selectedForms)" :disabled="signBtn">Sign</button>
     </div>
-
-
 </template>
 
 <script>
