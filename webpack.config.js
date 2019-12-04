@@ -1,9 +1,17 @@
 const express = require("express");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
-  entry: "./src/app.js",
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'pages': path.join(__dirname, '..', 'src/pages'),
+      'components': path.join(__dirname, '..','src/components')
+    }
+  },
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js"
@@ -11,7 +19,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html"
-    })
+    }),
+    new VueLoaderPlugin(),
   ],
   devServer: {
     contentBase: path.join(__dirname, "dist"),
@@ -23,6 +32,16 @@ module.exports = {
   },
   module: {
     rules: [
+       {
+        test: /\.vue$/,
+        use: 'vue-loader'
+      }, {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        }
+      },
       {
         test: /\.s[ac]ss$/i,
         use: [
